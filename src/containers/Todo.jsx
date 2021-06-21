@@ -1,6 +1,6 @@
 import './Todo.scss'
 import { useState } from 'react';
-import InputNew from '../components/InputNew';
+import AddCard from '../components/AddCard';
 import List from '../components/List';
 
 function Todo() {
@@ -55,32 +55,35 @@ function Todo() {
       title: 'Done',
       value: 'done'
     },
-    {
-      title: 'X',
-      value: 'delete'
-    },
+    // {
+    //   title: 'X',
+    //   value: 'delete'
+    // },
   ];
   return (
     <section className='todo'>
+      {/* ganti ke div title nya */}
       <h1 className='todo__header'>Todo List</h1>
       <div className="todo__canvas">
-        {status.slice(0,2).map((item, id) => (
+        {status.map((item, id) => (
           <section key={id} className='todo__card'>
             <h2 className='todo__card__title'>{item.title}</h2>
-            <ul className='todo__list'>
-              {data && data.filter(el => el.status === status[id].value).map(list => (
-                <List
-                  key={list.id}
-                  list={list}
-                  status={status}
-                  handle={(select)=>handleSelectDropdown(select, list.id)}
-                  handleEdit={(task)=>handleEditData(task, list.id)}
-                />
-              ))}
-            </ul>
+            {data.length > 0 &&
+              <ul className='todo__list'>
+                {data.filter(el => el.status === status[id].value).map(list => (
+                  <List
+                    key={list.id}
+                    list={list}
+                    status={status}
+                    handle={(select)=>handleSelectDropdown(select, list.id)}
+                    handleEdit={(task)=>handleEditData(task, list.id)}
+                  />
+                ))}
+              </ul>
+            }
 
             {/* Untuk nambah card per kolom */}
-            <InputNew status={item.value} handleAddTodo={handleAddTodo} />
+            <AddCard status={item.value} handleAddTodo={handleAddTodo} listData={data} />
           </section>
         ))}
       </div>

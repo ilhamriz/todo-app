@@ -6,6 +6,9 @@ function Dropdown({status, handle}) {
           {stat.title}
         </div>
       ))}
+      <div className='dropdown__item' onClick={()=>handle('delete')}>
+        Delete
+      </div>
     </div>
   )
 }
