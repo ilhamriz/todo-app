@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { chevronDown } from "../assets";
 import Dropdown from "./Dropdown";
 import autosize from "autosize";
 import { CSSTransition } from "react-transition-group";

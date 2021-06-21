@@ -7,7 +7,7 @@ function Dropdown({status, handle}) {
         </div>
       ))}
       <div className='dropdown__item' onClick={()=>handle('delete')}>
-        Delete
+        Archive
       </div>
     </div>
   )

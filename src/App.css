@@ -19,7 +19,7 @@ a{
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: aqua;
+  /* background-color: aqua; */
 }
 
 .hidden{
