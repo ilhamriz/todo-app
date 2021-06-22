@@ -1,16 +1,19 @@
 @import '../Variables.scss';
 
-.todo__add-list{
+.todo__add-list, .todo__add-list--open{
   white-space: normal;
   width: 272px;
   height: fit-content;
-  padding: 4px;
+  // padding: 4px;
   display: inline-flex;
   flex-direction: column;
   margin: 0 8px;
   border-radius: 4px;
+  // transition: 85ms ease-in;
+}
+
+.todo__add-list{
   cursor: pointer;
-  transition: 85ms ease-in;
   background-color: rgba($color: #000000, $alpha: .1);
 
   &:hover{
@@ -18,8 +21,12 @@
   }
 }
 
+.todo__add-list--open{
+  background-color: $bg-list;
+}
+
 .add-list__open{
-  padding: 4px 8px;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
   column-gap: 2px;
@@ -29,4 +36,19 @@
   line-height: 20px;
   transition: 85ms ease-in;
   color: $text-secondary;
+}
+
+.add-list__form{
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  // z-index: 2;
+}
+
+.add-list__input{
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 2px #0079bf;
+  transition: margin 85ms ease-in, background 85ms ease-in;
 }

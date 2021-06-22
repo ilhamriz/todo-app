@@ -5,7 +5,17 @@ import AddList from '../components/AddList';
 import List from '../components/List';
 
 function Todo() {
+  const [status, setStatus] = useState([]);
   const [data, setData] = useState([]);
+
+  function handleAddList(list) {
+    let newList = {
+      title: list,
+      value: list
+    };
+
+    setStatus([...status, newList]);
+  };
 
   const handleAddTodo = (input, status) => {
     let idData=0;
@@ -36,27 +46,20 @@ function Todo() {
       handleDeleteData(index);      
     }
   }
+
   const handleEditData = (task, id) => {
     const index = data.findIndex(el => el.id === id);
     let tempArray = [...data];
     tempArray[index].name = task;
     setData(tempArray)
   }
+
   const handleDeleteData = (index) => {
     let tempArray = [...data];
     tempArray.splice(index, 1);
     setData(tempArray);
   }
-  const status = [
-    {
-      title: 'Todo',
-      value: 'todo'
-    },
-    {
-      title: 'Done',
-      value: 'done'
-    }
-  ];
+
   return (
     <section className='todo'>
       {/* ganti titlenya ke div */}
@@ -84,7 +87,7 @@ function Todo() {
           </section>
         ))}
 
-        <AddList list={status} />
+        <AddList list={status} handleAddList={handleAddList} />
       </div>
     </section>
   )
