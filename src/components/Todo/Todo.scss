@@ -1,4 +1,4 @@
-@import '../Variables.scss';
+@import '../../Variables.scss';
 
 .todo{
   // width: 100%;
@@ -12,6 +12,9 @@
 }
 
 .todo__header{
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 32px;
   padding: 8px;
 }
 
@@ -26,7 +29,7 @@
   background-color: darkkhaki;
 }
 
-.todo__card{
+.todo__list{
   white-space: normal;
   width: 272px;
   height: fit-content;
@@ -39,14 +42,14 @@
   border-radius: 4px;
   background-color: #EBECF0;
 }
-.todo__card__title{
+.todo__list__title{
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
   padding: 0 8px 8px;
 }
 
-.todo__list{
+.todo__card{
   list-style: none;
   display: flex;
   flex-direction: column;

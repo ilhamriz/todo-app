@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import Dropdown from "./Dropdown";
+import MenuCard from "../MenuCard";
 import autosize from "autosize";
 import { CSSTransition } from "react-transition-group";
-import Button from "./Button";
-import './List.scss'
+import Button from "../Button";
+import './Card.scss'
 
 function List({ list, status, handle, handleEdit }) {
   // const [isOpen, setIsOpen] = useState(false);
@@ -13,10 +13,11 @@ function List({ list, status, handle, handleEdit }) {
 
   const [offsetTop, setOffsetTop] = useState(0);
   const [offsetLeft, setOffsetLeft] = useState(0);
+
   useEffect(() => {
     setOffsetTop(listRef.current.offsetTop);
     setOffsetLeft(listRef.current.offsetLeft);
-  });
+  }, []);
 
   const [isEdit, setIsEdit] = useState(false);
   const [inputEdit, setInputEdit] = useState(list.name);
@@ -75,7 +76,7 @@ function List({ list, status, handle, handleEdit }) {
                 timeout={200}
                 classNames="fade"
               >
-                <Dropdown status={status} handle={handle} />
+                <MenuCard status={status} handle={handle} />
               </CSSTransition>
 
               <div>

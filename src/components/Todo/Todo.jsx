@@ -2,7 +2,7 @@ import './Todo.scss'
 import { useState } from 'react';
 import AddCard from '../components/AddCard';
 import AddList from '../components/AddList';
-import List from '../components/List';
+import Card from '../components/Card';
 
 function Todo() {
   const [status, setStatus] = useState([]);
@@ -61,17 +61,17 @@ function Todo() {
   }
 
   return (
-    <section className='todo'>
+    <div className='todo'>
       {/* ganti titlenya ke div */}
-      <h1 className='todo__header'>Todo List</h1>
+      <div className='todo__header'>Todo List</div>
       <div className="todo__canvas">
         {status.map((item, id) => (
-          <section key={id} className='todo__card'>
-            <h2 className='todo__card__title'>{item.title}</h2>
+          <section key={id} className='todo__list'>
+            <h2 className='todo__list__title'>{item.title}</h2>
             {data.length > 0 &&
-              <ul className='todo__list'>
+              <ul className='todo__card'>
                 {data.filter(el => el.status === status[id].value).map(list => (
-                  <List
+                  <Card
                     key={list.id}
                     list={list}
                     status={status}
@@ -89,7 +89,7 @@ function Todo() {
 
         <AddList list={status} handleAddList={handleAddList} />
       </div>
-    </section>
+    </div>
   )
 }
 

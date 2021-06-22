@@ -1,4 +1,4 @@
-function Dropdown({status, handle}) {
+function MenuCard({status, handle}) {
   return (
     <div className="dropdown__menu">
       {status.map((stat, idx)=>(
@@ -13,4 +13,4 @@ function Dropdown({status, handle}) {
   )
 }
 
-export default Dropdown
+export default MenuCard
