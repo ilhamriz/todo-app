@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import MenuCard from "../MenuCard";
-import autosize from "autosize";
 import { CSSTransition } from "react-transition-group";
+import autosize from "autosize";
+import MenuCard from "../MenuCard";
 import Button from "../Button";
 import './Card.scss'
+import PropTypes from 'prop-types';
 
-function List({ list, status, handle, handleEdit }) {
+function Card({ data, lists, handleMenuCard, handleEditData }) {
   // const [isOpen, setIsOpen] = useState(false);
   const inputRef = useRef(null);
   const modalRef = useRef(null);
@@ -20,9 +21,9 @@ function List({ list, status, handle, handleEdit }) {
   }, []);
 
   const [isEdit, setIsEdit] = useState(false);
-  const [inputEdit, setInputEdit] = useState(list.name);
+  const [inputEdit, setInputEdit] = useState(data.name);
   const handleSubmitEdit = () => {
-    handleEdit(inputEdit);
+    handleEditData(inputEdit);
     setIsEdit(false);
   };
 
@@ -34,7 +35,7 @@ function List({ list, status, handle, handleEdit }) {
       function handleClickOutside(event) {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
           setIsEdit(false);
-          setInputEdit(list.name);
+          setInputEdit(data.name);
         }
       }
       document.addEventListener("mousedown", handleClickOutside);
@@ -53,7 +54,7 @@ function List({ list, status, handle, handleEdit }) {
             setIsEdit(true);
           }}
         >
-          <div className="item__task">{list.name}</div>
+          <div className="item__task">{data.name}</div>
         </div>
         {isEdit && (
           <div className="item__edit">
@@ -76,7 +77,7 @@ function List({ list, status, handle, handleEdit }) {
                 timeout={200}
                 classNames="fade"
               >
-                <MenuCard status={status} handle={handle} />
+                <MenuCard lists={lists} handleMenuCard={handleMenuCard} />
               </CSSTransition>
 
               <div>
@@ -88,6 +89,13 @@ function List({ list, status, handle, handleEdit }) {
       </li>
     </>
   );
-}
+};
 
-export default List;
+Card.propTypes = {
+  data: PropTypes.object,
+  lists: PropTypes.array,
+  handleMenuCard: PropTypes.func,
+  handleEditData: PropTypes.func,
+};
+
+export default Card;

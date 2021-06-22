@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import './AddList.scss'
 import autosize from 'autosize';
 import Button from '../Button';
+import PropTypes from 'prop-types';
 
-function AddList({list, handleAddList}) {
+function AddList({lists, handleAddList}) {
   const inputRef = useRef(null);
   const addRef = useRef(null);
 
@@ -72,7 +73,7 @@ function AddList({list, handleAddList}) {
               <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
 
-            {list.length ? (
+            {lists.length ? (
               <span>Add another list</span>
             ) : (
               <span>Add a list</span>
@@ -82,6 +83,11 @@ function AddList({list, handleAddList}) {
       )}
     </div>
   )
-}
+};
+
+AddList.propTypes = {
+  lists: PropTypes.array,
+  handleAddList: PropTypes.func,
+};
 
 export default AddList

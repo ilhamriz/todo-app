@@ -1,46 +1,42 @@
 import './Todo.scss'
 import { useState } from 'react';
-import AddCard from '../components/AddCard';
-import AddList from '../components/AddList';
-import Card from '../components/Card';
+import AddCard from '../AddCard';
+import AddList from '../AddList';
+import Card from '../Card';
 
 function Todo() {
-  const [status, setStatus] = useState([]);
-  const [data, setData] = useState([]);
+  const [lists, setLists] = useState([]);
+  const [datas, setDatas] = useState([]);
 
   function handleAddList(list) {
-    let newList = {
-      title: list,
-      value: list
-    };
-
-    setStatus([...status, newList]);
+    setLists([...lists, list]);
   };
+  // console.log('lists => ', lists);
 
-  const handleAddTodo = (input, status) => {
+  const handleAddData = (input, list) => {
     let idData=0;
-    if (!data.length) {
+    if (!datas.length) {
       idData=1;
     }
     else{
-      idData = data[data.length - 1].id + 1;
+      idData = datas[datas.length - 1].id + 1;
     }
 
     let newData = {
       id: idData,
       name: input,
-      status: status
+      list: list
     }
 
-    setData([...data, newData]);
+    setDatas([...datas, newData]);
   }
-  // console.log('data => ', data);
+  // console.log('datas => ', datas);
 
   const handleSelectDropdown = (select, id) => {
-    const index = data.findIndex(el => el.id === id);
-    let tempArray = [...data];
-    tempArray[index].status = select;
-    setData(tempArray);
+    const index = datas.findIndex(el => el.id === id);
+    let tempArray = [...datas];
+    tempArray[index].list = select;
+    setDatas(tempArray);
 
     if (select === 'delete') {
       handleDeleteData(index);      
@@ -48,49 +44,47 @@ function Todo() {
   }
 
   const handleEditData = (task, id) => {
-    const index = data.findIndex(el => el.id === id);
-    let tempArray = [...data];
+    const index = datas.findIndex(el => el.id === id);
+    let tempArray = [...datas];
     tempArray[index].name = task;
-    setData(tempArray)
+    setDatas(tempArray)
   }
 
   const handleDeleteData = (index) => {
-    let tempArray = [...data];
+    let tempArray = [...datas];
     tempArray.splice(index, 1);
-    setData(tempArray);
+    setDatas(tempArray);
   }
 
   return (
     <div className='todo'>
-      {/* ganti titlenya ke div */}
       <div className='todo__header'>Todo List</div>
       <div className="todo__canvas">
-        {status.map((item, id) => (
+        {lists.map((list, id) => (
           <section key={id} className='todo__list'>
-            <h2 className='todo__list__title'>{item.title}</h2>
-            {data.length > 0 &&
+            <h2 className='todo__list__title'>{list}</h2>
+            {datas.length > 0 &&
               <ul className='todo__card'>
-                {data.filter(el => el.status === status[id].value).map(list => (
+                {datas.filter(el => el.list === lists[id]).map(data => (
                   <Card
-                    key={list.id}
-                    list={list}
-                    status={status}
-                    handle={(select)=>handleSelectDropdown(select, list.id)}
-                    handleEdit={(task)=>handleEditData(task, list.id)}
+                    key={data.id}
+                    data={data}
+                    lists={lists}
+                    handleMenuCard={(select)=>handleSelectDropdown(select, data.id)}
+                    handleEditData={(task)=>handleEditData(task, data.id)}
                   />
                 ))}
               </ul>
             }
 
-            {/* Untuk nambah card per kolom */}
-            <AddCard status={item.value} handleAddTodo={handleAddTodo} listData={data} />
+            <AddCard list={list} handleAddData={handleAddData} datas={datas} />
           </section>
         ))}
 
-        <AddList list={status} handleAddList={handleAddList} />
+        <AddList lists={lists} handleAddList={handleAddList} />
       </div>
     </div>
   )
 }
 
-export default Todo
+export default Todo;
