@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import autosize from 'autosize';
 import Button from '../../Button';
 
-function AddCardForm({isAddOpen, setIsAddOpen, handleAddData, list}) {
+function AddCardForm({handleAddData, list, handleOpenAddCard}) {
   const inputRef = useRef(null);
   const addRef = useRef(null);
   const [input, setInput] = useState('');
@@ -13,9 +13,9 @@ function AddCardForm({isAddOpen, setIsAddOpen, handleAddData, list}) {
     if (!input.length) {
       return;
     }
-    handleAddData(input, list);
+    handleAddData(input, list.title);
     setInput('');
-    setIsAddOpen(false);
+    inputRef.current.focus();
   }
 
   function handleClickOutside(event) {
@@ -25,7 +25,7 @@ function AddCardForm({isAddOpen, setIsAddOpen, handleAddData, list}) {
   }
   function handleCloseCard(){
     setInput('');
-    setIsAddOpen(false);
+    handleOpenAddCard(list.id);
   }
   // function handlePressEnter(event) {
   //   if (event.code === "Enter" || event.code === "NumpadEnter") {
@@ -34,8 +34,9 @@ function AddCardForm({isAddOpen, setIsAddOpen, handleAddData, list}) {
   // }
   
   useEffect(() => {
-    if (isAddOpen) {
+    if (list.isAddOpen) {
       inputRef.current.focus();
+      addRef.current.scrollIntoView({ behavior: "smooth" });
       autosize(inputRef.current);
 
       document.addEventListener("mousedown", handleClickOutside);
@@ -45,13 +46,13 @@ function AddCardForm({isAddOpen, setIsAddOpen, handleAddData, list}) {
         // document.removeEventListener("keydown", handlePressEnter);
       }
     }
-  }, [isAddOpen]);
+  }, [list.isAddOpen]);
 
   return (
     <>
-      {isAddOpen && (
+      {list.isAddOpen && (
         <>
-          <form className="todo__add__form" onSubmit={handleSubmit}>
+          <form className="todo__add__form" ref={addRef} onSubmit={handleSubmit}>
             <textarea
               className='item__edit__input'
               ref={inputRef}
@@ -75,10 +76,9 @@ function AddCardForm({isAddOpen, setIsAddOpen, handleAddData, list}) {
 }
 
 AddCardForm.propTypes = {
-  isAddOpen: PropTypes.bool,
-  setIsAddOpen: PropTypes.bool,
   handleAddData: PropTypes.func,
-  list: PropTypes.string
+  handleOpenAddCard: PropTypes.func,
+  list: PropTypes.object
 }
 
 export default AddCardForm

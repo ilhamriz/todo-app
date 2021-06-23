@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
+import './MenuCard.scss';
 
 function MenuCard({lists, handleMenuCard}) {
   return (
     <div className="dropdown__menu">
-      {lists.map((stat, idx)=>(
-        <div key={idx} className='dropdown__item' onClick={()=>handleMenuCard(stat)}>
-          {stat}
+      {lists.map(list => (
+        <div key={list.id} className='dropdown__item' onClick={()=>handleMenuCard(list.title)}>
+          {list.title}
         </div>
       ))}
       <div className='dropdown__item' onClick={()=>handleMenuCard('delete')}>

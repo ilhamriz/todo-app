@@ -17,7 +17,7 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
   useEffect(() => {
     setOffsetTop(listRef.current.offsetTop);
     setOffsetLeft(listRef.current.offsetLeft);
-  }, []);
+  });
 
   const [isEdit, setIsEdit] = useState(false);
   const [inputEdit, setInputEdit] = useState(data.name);
@@ -49,9 +49,7 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
       <li className="todo__item" ref={listRef}>
         <div
           className="item__main"
-          onClick={() => {
-            setIsEdit(true);
-          }}
+          onClick={() => {setIsEdit(true);}}
         >
           <div className="item__task">{data.name}</div>
         </div>
