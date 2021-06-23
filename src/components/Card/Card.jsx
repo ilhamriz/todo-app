@@ -7,7 +7,6 @@ import './Card.scss'
 import PropTypes from 'prop-types';
 
 function Card({ data, lists, handleMenuCard, handleEditData }) {
-  // const [isOpen, setIsOpen] = useState(false);
   const inputRef = useRef(null);
   const modalRef = useRef(null);
   const listRef = useRef(null);

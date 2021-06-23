@@ -1,6 +1,7 @@
 import './Todo.scss'
 import { useState } from 'react';
 import AddCard from '../AddCard';
+import AddCardForm from '../AddCard/AddCardForm';
 import AddList from '../AddList';
 import Card from '../Card';
 
@@ -32,7 +33,7 @@ function Todo() {
   }
   // console.log('datas => ', datas);
 
-  const handleSelectDropdown = (select, id) => {
+  const handleMenuCard = (select, id) => {
     const index = datas.findIndex(el => el.id === id);
     let tempArray = [...datas];
     tempArray[index].list = select;
@@ -55,11 +56,14 @@ function Todo() {
     tempArray.splice(index, 1);
     setDatas(tempArray);
   }
+  
+  const [isAddOpen, setIsAddOpen] = useState(false);
 
   return (
     <div className='todo'>
       <div className='todo__header'>Todo List</div>
       <div className="todo__canvas">
+
         {lists.map((list, id) => (
           <section key={id} className='todo__list'>
             <h2 className='todo__list__title'>{list}</h2>
@@ -70,13 +74,14 @@ function Todo() {
                     key={data.id}
                     data={data}
                     lists={lists}
-                    handleMenuCard={(select)=>handleSelectDropdown(select, data.id)}
+                    handleMenuCard={(select)=>handleMenuCard(select, data.id)}
                     handleEditData={(task)=>handleEditData(task, data.id)}
                   />
                 ))}
+
+                <AddCardForm isAddOpen={isAddOpen} setIsAddOpen={setIsAddOpen} handleAddData={handleAddData} list={list} />
               </ul>
             }
-
             <AddCard list={list} handleAddData={handleAddData} datas={datas} />
           </section>
         ))}
