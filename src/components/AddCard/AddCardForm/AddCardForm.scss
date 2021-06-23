@@ -1,0 +1,36 @@
+@import '../../../Variables.scss';
+
+.todo__add__form{
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  padding-bottom: 8px;
+}
+
+// .todo__add__input{
+//   padding: 8px;
+//   border: none;
+//   outline: none;
+//   margin-bottom: 8px;
+// }
+
+.add__button{
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+}
+.add__button--close{
+  padding: 4px;
+  display: flex;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+.close__icon{
+  stroke: $icon-1;
+  transition: 85ms ease-in;
+  
+  &:hover{
+    stroke: $text-primary;
+  }
+}

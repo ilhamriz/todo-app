@@ -77,6 +77,10 @@
 .todo__card::-webkit-scrollbar {
   width: 8px;
 }
+// .todo__card::-webkit-scrollbar-button {
+//   display: block;
+//   height: 4px;
+// }
 .todo__card::-webkit-scrollbar-track {
   border-radius: 4px;
   background: rgba(9,30,66,.08);

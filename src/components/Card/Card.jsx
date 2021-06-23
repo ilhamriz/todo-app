@@ -46,11 +46,8 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
 
   return (
     <>
-      <li className="todo__item" ref={listRef}>
-        <div
-          className="item__main"
-          onClick={() => {setIsEdit(true);}}
-        >
+      <li className="todo__item" ref={listRef} onClick={() => {setIsEdit(true);}}>
+        <div className="item__main">
           <div className="item__task">{data.name}</div>
         </div>
         {isEdit && (

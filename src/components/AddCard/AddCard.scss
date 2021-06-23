@@ -23,41 +23,6 @@
     background-color: rgba(9,30,66,.08);
   }
 }
-.todo__add__form{
-  display: flex;
-  flex-direction: column;
-  row-gap: 8px;
-  z-index: 2;
-}
-
-.todo__add__input{
-  // width: 100%;
-  padding: 8px;
-  border: none;
-  outline: none;
-  margin-bottom: 8px;
-}
-
-.add__button{
-  display: flex;
-  align-items: center;
-  column-gap: 4px;
-}
-.add__button--close{
-  padding: 4px;
-  display: flex;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-}
 .plus__icon{
   stroke: $icon-1;
-}
-.close__icon{
-  stroke: $icon-1;
-  transition: 85ms ease-in;
-
-  &:hover{
-    stroke: $text-primary;
-  }
 }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import autosize from 'autosize';
 import Button from '../../Button';
+import './AddCardForm.scss';
 
 function AddCardForm({handleAddData, list, handleOpenAddCard}) {
   const inputRef = useRef(null);
