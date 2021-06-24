@@ -38,3 +38,9 @@ input{
 input::placeholder{
   font-size: 13px;
 }
+
+button{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}

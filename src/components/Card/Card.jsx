@@ -13,22 +13,24 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
 
   const [offsetTop, setOffsetTop] = useState(0);
   const [offsetLeft, setOffsetLeft] = useState(0);
+  const [isEdit, setIsEdit] = useState(false);
+  const [inputEdit, setInputEdit] = useState(data.name);
 
   useEffect(() => {
     setOffsetTop(listRef.current.offsetTop);
     setOffsetLeft(listRef.current.offsetLeft);
   });
 
-  const [isEdit, setIsEdit] = useState(false);
-  const [inputEdit, setInputEdit] = useState(data.name);
+
   const handleSubmitEdit = () => {
-    handleEditData(inputEdit);
+    handleEditData(data.id, inputEdit);
     setIsEdit(false);
   };
 
   useEffect(() => {
     if (isEdit) {
       inputRef.current.focus();
+      inputRef.current.select();
       autosize(inputRef.current);
 
       function handleClickOutside(event) {
@@ -71,7 +73,7 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
                 timeout={200}
                 classNames="fade"
               >
-                <MenuCard lists={lists} handleMenuCard={handleMenuCard} />
+                <MenuCard lists={lists} handleMenuCard={handleMenuCard} currentList={data.list} />
               </CSSTransition>
 
               <div>

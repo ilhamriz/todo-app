@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import './MenuCard.scss';
-import {archive, arrowRight} from '../../assets';
 import { useState } from 'react';
 import { CSSTransition } from "react-transition-group";
 
-function MenuCard({lists, handleMenuCard}) {
+function MenuCard({lists, handleMenuCard, currentList}) {
   const [isOpenMove, setIsOpenMove] = useState(false);
 
   return (
@@ -19,12 +18,12 @@ function MenuCard({lists, handleMenuCard}) {
 
       {isOpenMove && (
         <>
-          {lists.map(list => (
+          {lists.filter(el => el.title !== currentList).map(list => (
             <CSSTransition
               key={list.id}
               in={isOpenMove}
               appear={true}
-              timeout={200}
+              timeout={300}
               classNames="menu-fade"
             >
               <div key={list.id} className='menu-list__item--move' onClick={()=>handleMenuCard(list.title)}>
