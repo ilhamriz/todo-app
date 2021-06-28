@@ -1,8 +1,5 @@
 @import '../../Variables.scss';
 
-// .todo__add{
-  
-// }
 .todo__add__open{
   margin: 2px 8px 8px;
   padding: 6px 8px;
@@ -22,7 +19,4 @@
     // background-color: #dcdde0;
     background-color: rgba(9,30,66,.08);
   }
-}
-.plus__icon{
-  stroke: $icon-1;
 }

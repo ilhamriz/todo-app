@@ -4,14 +4,30 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: darkgreen;
+  background-color: rgb(0, 121, 191);
 }
 
 .todo__header{
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+  padding: 8px 8px 12px;
+}
+.todo__header__name{
+  width: fit-content;
   font-size: 24px;
   font-weight: 800;
-  line-height: 32px;
-  padding: 8px;
+  line-height: 36px;
+  padding: 0 16px;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  transition: 85ms ease-in;
+  background-color: rgba($color: #fff, $alpha: 0.24);
+
+  &:hover{
+    background-color: rgba($color: #fff, $alpha: 0.32);
+  }
 }
 
 .todo__canvas{
@@ -22,7 +38,7 @@
   flex-grow: 1;
   overflow-x: auto;
   overflow-y: hidden;
-  background-color: darkkhaki;
+  // background-color: darkkhaki;
 }
 .todo__canvas::-webkit-scrollbar {
   height: 12px;

@@ -10,9 +10,6 @@ function Todo() {
   const [lists, setLists] = useState([]);
   const [datas, setDatas] = useState([]);
 
-  console.log('lists => ',lists);
-  console.log('datas => ',datas);
-
   function handleAddList(list) {
     let idList = 0;
     if (!lists.length) {
@@ -27,14 +24,14 @@ function Todo() {
       isAddOpen: false,
     };
     setLists([...lists, newList]);
-  };
+  }
 
   function handleEditList(id, newList) {
     const index = lists.findIndex((el) => el.id === id);
     let tempArray = [...lists];
     tempArray[index].title = newList;
     setLists(tempArray);
-  };
+  }
 
   function handleDeleteList(id) {
     const index = lists.findIndex((el) => el.id === id);
@@ -43,7 +40,7 @@ function Todo() {
     handleDeleteAllData(tempArray[index].id);
     tempArray.splice(index, 1);
     setLists(tempArray);
-  };
+  }
 
   const handleAddData = (input, listID) => {
     let idData = 0;
@@ -77,17 +74,22 @@ function Todo() {
 
   function handleDeleteAllData(listID) {
     let tempArray = [...datas];
-    const filtering = tempArray.filter(el => el.listID === listID);
-    filtering.forEach(() => tempArray.splice(tempArray.findIndex(el => el.listID === listID), 1));
+    const filtering = tempArray.filter((el) => el.listID === listID);
+    filtering.forEach(() =>
+      tempArray.splice(
+        tempArray.findIndex((el) => el.listID === listID),
+        1
+      )
+    );
     setDatas(tempArray);
-  };
+  }
 
   function handleOpenAddCard(id) {
     const index = lists.findIndex((el) => el.id === id);
     let tempArray = [...lists];
     tempArray[index].isAddOpen = !tempArray[index].isAddOpen;
     setLists(tempArray);
-  };
+  }
 
   const handleMenuCard = (select, id) => {
     const index = datas.findIndex((el) => el.id === id);
@@ -102,7 +104,20 @@ function Todo() {
 
   return (
     <div className="todo">
-      <div className="todo__header">Todo List</div>
+      <div className="todo__header">
+        <div className="todo__header__name">Todo List</div>
+        <span className="credits">
+          Made by{" "}
+          <a
+            className="credits__link"
+            href="https://github.com/ilhamriz"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ilhamriz
+          </a>
+        </span>
+      </div>
       <div className="todo__canvas">
         {lists.map((list, id) => (
           <section key={id} className="todo__list">

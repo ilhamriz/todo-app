@@ -9,15 +9,17 @@
   flex-direction: column;
   margin: 0 8px;
   border-radius: 4px;
-  // transition: 85ms ease-in;
+  transition: 85ms ease-in;
 }
 
 .todo__add-list{
   cursor: pointer;
-  background-color: rgba($color: #000000, $alpha: .1);
+  background-color: rgba(255, 255, 255, 0.24);
+  // background-color: rgba($color: #000000, $alpha: .1);
 
   &:hover{
-    background-color: rgba($color: #000000, $alpha: .2)
+    background-color: rgba(255, 255, 255, 0.32);
+    // background-color: rgba($color: #000000, $alpha: .2)
   }
 }
 
@@ -35,7 +37,8 @@
   font-size: 14px;
   line-height: 20px;
   transition: 85ms ease-in;
-  color: $text-secondary;
+  // color: $text-secondary;
+  color: #fff;
 }
 
 .add-list__form{
@@ -43,7 +46,6 @@
   display: flex;
   flex-direction: column;
   row-gap: 8px;
-  // z-index: 2;
 }
 
 .add-list__input{
