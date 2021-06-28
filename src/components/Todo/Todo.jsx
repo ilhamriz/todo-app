@@ -4,39 +4,40 @@ import AddCard from "../AddCard";
 import AddCardForm from "../AddCard/AddCardForm";
 import AddList from "../AddList";
 import Card from "../Card";
-import ListHeader from '../ListHeader';
+import ListHeader from "../ListHeader";
 
 function Todo() {
   const [lists, setLists] = useState([]);
   const [datas, setDatas] = useState([]);
 
   function handleAddList(list) {
-    let idData = 0;
+    let idList = 0;
     if (!lists.length) {
-      idData = 1;
+      idList = 1;
     } else {
-      idData = lists[lists.length - 1].id + 1;
+      idList = lists[lists.length - 1].id + 1;
     }
 
     let newList = {
-      id: idData,
+      id: idList,
       title: list,
       isAddOpen: false,
     };
     setLists([...lists, newList]);
-  }
-  console.log('lists => ', lists);
+  };
 
   function handleEditList(id, newList) {
     const index = lists.findIndex((el) => el.id === id);
     let tempArray = [...lists];
     tempArray[index].title = newList;
     setLists(tempArray);
-  }
+  };
 
   function handleDeleteList(id) {
     const index = lists.findIndex((el) => el.id === id);
     let tempArray = [...lists];
+
+    handleDeleteAllData(tempArray[index].title);
     tempArray.splice(index, 1);
     setLists(tempArray);
   };
@@ -57,7 +58,6 @@ function Todo() {
 
     setDatas([...datas, newData]);
   };
-  // console.log('datas => ', datas);
 
   const handleEditData = (id, task) => {
     const index = datas.findIndex((el) => el.id === id);
@@ -65,14 +65,21 @@ function Todo() {
     tempArray[index].name = task;
     setDatas(tempArray);
   };
-  
+
   const handleDeleteData = (index) => {
     let tempArray = [...datas];
     tempArray.splice(index, 1);
     setDatas(tempArray);
   };
 
-  function handleOpenAddCard(id){
+  function handleDeleteAllData(list) {
+    let tempArray = [...datas];
+    const filtering = tempArray.filter(el => el.list === list);
+    filtering.forEach(() => tempArray.splice(tempArray.findIndex(el => el.list === list), 1));
+    setDatas(tempArray);
+  };
+
+  function handleOpenAddCard(id) {
     const index = lists.findIndex((el) => el.id === id);
     let tempArray = [...lists];
     tempArray[index].isAddOpen = !tempArray[index].isAddOpen;
@@ -90,15 +97,6 @@ function Todo() {
     }
   };
 
-  // const [input, setInput] = useState('');
-  // function submitTest(event) {
-  //   event.preventDefault();
-  //   console.log('test');
-  // }
-  // const [isAddOpen, setIsAddOpen] = useState(false);
-  // console.log('isAddOpen -> ',isAddOpen);
-  // const [isHeaderEdit, setIsHeaderEdit] = useState(false);
-
   return (
     <div className="todo">
       <div className="todo__header">Todo List</div>
@@ -107,38 +105,27 @@ function Todo() {
           <section key={id} className="todo__list">
             <h2 className="hidden">{list.title}</h2>
 
-            <ListHeader list={list} handleEditList={handleEditList} />
+            <ListHeader
+              list={list}
+              handleEditList={handleEditList}
+              handleOpenAddCard={handleOpenAddCard}
+              handleDeleteAllData={handleDeleteAllData}
+              handleDeleteList={handleDeleteList}
+            />
 
-            {/* <div className="list__header">
-              <form onSubmit={(e)=>submitTest(e)}>
-                <input
-                  className='list__header__input'
-                  // value={input}
-                  value={list.title}
-                  onChange={(e)=>setInput(e.target.value)}
-                  autoComplete='off'
-                />
-              </form>
-              <div className="list__title" onClick={()=>setIsHeaderEdit(true)}>
-                {list.title}
-              </div>
-              <button type='button' className="list__extras">
-                <svg className='list__extras__icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M5 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm14 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div> */}
-            
             <ul className="todo__card">
-              {datas.filter((el) => el.list === lists[id].title).map((data) => (
-                <Card
-                  key={data.id}
-                  data={data}
-                  lists={lists}
-                  handleMenuCard={(select) => handleMenuCard(select, data.id)}
-                  handleEditData={handleEditData}
-                  // handleEditData={(task) => handleEditData(task, data.id)}
-                />
-              ))}
-
+              {datas
+                .filter((el) => el.list === lists[id].title)
+                .map((data) => (
+                  <Card
+                    key={data.id}
+                    data={data}
+                    lists={lists}
+                    handleMenuCard={(select) => handleMenuCard(select, data.id)}
+                    handleEditData={handleEditData}
+                    // handleEditData={(task) => handleEditData(task, data.id)}
+                  />
+                ))}
               <AddCardForm
                 list={list}
                 handleAddData={handleAddData}
