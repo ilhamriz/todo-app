@@ -18,7 +18,7 @@ function MenuCard({lists, handleMenuCard, currentList}) {
 
       {isOpenMove && (
         <>
-          {lists.filter(el => el.title !== currentList).map(list => (
+          {lists.filter(el => el.id !== currentList).map(list => (
             <CSSTransition
               key={list.id}
               in={isOpenMove}
@@ -26,7 +26,7 @@ function MenuCard({lists, handleMenuCard, currentList}) {
               timeout={300}
               classNames="menu-fade"
             >
-              <div key={list.id} className='menu-list__item--move' onClick={()=>handleMenuCard(list.title)}>
+              <div key={list.id} className='menu-list__item--move' onClick={()=>handleMenuCard(list.id)}>
                 {list.title}
               </div>
             </CSSTransition>
@@ -47,6 +47,7 @@ function MenuCard({lists, handleMenuCard, currentList}) {
 MenuCard.propTypes = {
   lists: PropTypes.array,
   handleMenuCard: PropTypes.func,
+  currentList: PropTypes.number
 }
 
 export default MenuCard

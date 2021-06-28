@@ -10,6 +10,9 @@ function Todo() {
   const [lists, setLists] = useState([]);
   const [datas, setDatas] = useState([]);
 
+  console.log('lists => ',lists);
+  console.log('datas => ',datas);
+
   function handleAddList(list) {
     let idList = 0;
     if (!lists.length) {
@@ -37,12 +40,12 @@ function Todo() {
     const index = lists.findIndex((el) => el.id === id);
     let tempArray = [...lists];
 
-    handleDeleteAllData(tempArray[index].title);
+    handleDeleteAllData(tempArray[index].id);
     tempArray.splice(index, 1);
     setLists(tempArray);
   };
 
-  const handleAddData = (input, list) => {
+  const handleAddData = (input, listID) => {
     let idData = 0;
     if (!datas.length) {
       idData = 1;
@@ -53,7 +56,7 @@ function Todo() {
     let newData = {
       id: idData,
       name: input,
-      list: list,
+      listID: listID,
     };
 
     setDatas([...datas, newData]);
@@ -72,10 +75,10 @@ function Todo() {
     setDatas(tempArray);
   };
 
-  function handleDeleteAllData(list) {
+  function handleDeleteAllData(listID) {
     let tempArray = [...datas];
-    const filtering = tempArray.filter(el => el.list === list);
-    filtering.forEach(() => tempArray.splice(tempArray.findIndex(el => el.list === list), 1));
+    const filtering = tempArray.filter(el => el.listID === listID);
+    filtering.forEach(() => tempArray.splice(tempArray.findIndex(el => el.listID === listID), 1));
     setDatas(tempArray);
   };
 
@@ -89,7 +92,7 @@ function Todo() {
   const handleMenuCard = (select, id) => {
     const index = datas.findIndex((el) => el.id === id);
     let tempArray = [...datas];
-    tempArray[index].list = select;
+    tempArray[index].listID = select;
     setDatas(tempArray);
 
     if (select === "delete") {
@@ -115,7 +118,7 @@ function Todo() {
 
             <ul className="todo__card">
               {datas
-                .filter((el) => el.list === lists[id].title)
+                .filter((el) => el.listID === lists[id].id)
                 .map((data) => (
                   <Card
                     key={data.id}
@@ -123,7 +126,6 @@ function Todo() {
                     lists={lists}
                     handleMenuCard={(select) => handleMenuCard(select, data.id)}
                     handleEditData={handleEditData}
-                    // handleEditData={(task) => handleEditData(task, data.id)}
                   />
                 ))}
               <AddCardForm

@@ -73,7 +73,7 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
                 timeout={200}
                 classNames="fade"
               >
-                <MenuCard lists={lists} handleMenuCard={handleMenuCard} currentList={data.list} />
+                <MenuCard lists={lists} handleMenuCard={handleMenuCard} currentList={data.listID} />
               </CSSTransition>
 
               <div>

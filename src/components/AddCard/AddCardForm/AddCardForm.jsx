@@ -14,7 +14,7 @@ function AddCardForm({handleAddData, list, handleOpenAddCard}) {
     if (!input.length) {
       return;
     }
-    handleAddData(input, list.title);
+    handleAddData(input, list.id);
     setInput('');
     inputRef.current.focus();
   }

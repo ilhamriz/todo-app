@@ -27,7 +27,7 @@ function ListHeader({list, handleEditList, handleOpenAddCard, handleDeleteAllDat
         handleOpenAddCard(list.id);
         break;    
       case 'delete_all_card':
-        handleDeleteAllData(list.title);
+        handleDeleteAllData(list.id);
         break;    
       default:
         handleDeleteList(list.id);
@@ -126,7 +126,11 @@ function ListHeader({list, handleEditList, handleOpenAddCard, handleDeleteAllDat
 }
 
 ListHeader.propTypes = {
-  list: PropTypes.object
+  list: PropTypes.object,
+  handleEditList: PropTypes.func,
+  handleOpenAddCard: PropTypes.func,
+  handleDeleteAllData: PropTypes.func,
+  handleDeleteList: PropTypes.func
 }
 
 export default ListHeader
