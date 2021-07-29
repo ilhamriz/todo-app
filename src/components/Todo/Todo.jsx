@@ -1,5 +1,5 @@
 import "./Todo.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddCard from "../AddCard";
 import AddCardForm from "../AddCard/AddCardForm";
 import AddList from "../AddList";
@@ -9,6 +9,16 @@ import ListHeader from "../ListHeader";
 function Todo() {
   const [lists, setLists] = useState([]);
   const [datas, setDatas] = useState([]);
+
+  useEffect(() => {
+    setLists(JSON.parse(localStorage.getItem('lists')));
+    setDatas(JSON.parse(localStorage.getItem('datas')));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('lists', JSON.stringify(lists));
+    localStorage.setItem('datas', JSON.stringify(datas));
+  }, [lists, datas]);
 
   function handleAddList(list) {
     let idList = 0;
@@ -105,18 +115,24 @@ function Todo() {
   return (
     <div className="todo">
       <div className="todo__header">
-        <div className="todo__header__name">Todo List</div>
-        <span className="credits">
-          Made by{" "}
-          <a
-            className="credits__link"
-            href="https://github.com/ilhamriz"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Ilhamriz
-          </a>
-        </span>
+        <div className="todo__header__title">
+          <div className="todo__header__name">Todo List</div>
+          <span className="todo__header__credit">
+            Made by{" "}
+            <a
+              className="credits__link"
+              href="https://github.com/ilhamriz"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ilhamriz
+            </a>
+          </span>
+        </div>
+        <button className="todo__header__menu">
+          <svg className='list-header__extra__icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M5 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm14 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+          Change background
+        </button>
       </div>
       <div className="todo__canvas">
         {lists.map((list, id) => (

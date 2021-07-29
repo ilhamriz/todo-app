@@ -9,14 +9,19 @@
 
 .todo__header{
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 8px 12px;
+}
+.todo__header__title{
+  display: flex;
   align-items: center;
   column-gap: 16px;
-  padding: 8px 8px 12px;
 }
 .todo__header__name{
   width: fit-content;
   font-size: 24px;
-  font-weight: 800;
+  font-weight: bold;
   line-height: 36px;
   padding: 0 16px;
   border-radius: 4px;
@@ -28,6 +33,11 @@
   &:hover{
     background-color: rgba($color: #fff, $alpha: 0.32);
   }
+}
+.todo__header__credit{
+  font-size: 14px;
+  letter-spacing: .5px;
+  color: rgba($color: #fff, $alpha: .5);
 }
 
 .todo__canvas{
