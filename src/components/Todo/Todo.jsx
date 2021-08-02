@@ -21,6 +21,7 @@ function Todo() {
     }
     
     window.addEventListener('resize', handleResize);
+    handleResize();
   }, []);
 
   useEffect(() => {
@@ -131,9 +132,6 @@ function Todo() {
   const [isMobile, setIsMobile] = useState(false);
   
   function handleResize(){
-    // if (window.innerWidth < 500) {
-    //   setIsMobile(true);
-    // }
     window.innerWidth < 500 ? setIsMobile(true) : setIsMobile(false);
   }
 
