@@ -9,18 +9,28 @@ import PropTypes from 'prop-types';
 function Card({ data, lists, handleMenuCard, handleEditData }) {
   const inputRef = useRef(null);
   const modalRef = useRef(null);
-  const listRef = useRef(null);
+  const cardRef = useRef(null);
 
   const [offsetTop, setOffsetTop] = useState(0);
   const [offsetLeft, setOffsetLeft] = useState(0);
   const [isEdit, setIsEdit] = useState(false);
   const [inputEdit, setInputEdit] = useState(data.name);
 
-  useEffect(() => {
-    setOffsetTop(listRef.current.offsetTop);
-    setOffsetLeft(listRef.current.offsetLeft);
-  });
+  let element = document.getElementById("todo__canvas");
 
+  useEffect(() => {
+    handleCardPosition();
+    element.addEventListener("scroll", handleCardPosition);
+
+    return () => {
+      element.removeEventListener('scroll', handleCardPosition);
+    };
+  }, []);
+
+  function handleCardPosition() {
+    setOffsetTop(cardRef.current.offsetTop);
+    setOffsetLeft(cardRef.current.offsetLeft - element.scrollLeft);
+  }
 
   const handleSubmitEdit = () => {
     handleEditData(data.id, inputEdit);
@@ -46,9 +56,17 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
     }
   }, [isEdit]);
 
+  function handleClickCard() {
+    if ((cardRef.current.offsetLeft - element.scrollLeft) < 0) {
+      cardRef.current.scrollIntoView();
+      element.scrollLeft -= 16;
+    }
+    setIsEdit(true);
+  }
+
   return (
     <>
-      <li className="todo__item" ref={listRef} onClick={() => {setIsEdit(true);}}>
+      <li className="todo__item" ref={cardRef} onClick={handleClickCard}>
         <div className="item__main">
           <div className="item__task">{data.name}</div>
         </div>

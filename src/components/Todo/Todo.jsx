@@ -157,7 +157,7 @@ function Todo() {
           {isMobile ? null : 'Change background' }
         </button>
       </div>
-      <div className="todo__canvas">
+      <div className="todo__canvas" id="todo__canvas">
         {lists && lists.map((list, id) => (
           <section key={id} className="todo__list">
             <h2 className="hidden">{list.title}</h2>
