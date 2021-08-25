@@ -176,6 +176,7 @@ function Todo() {
                 .map((data) => (
                   <Card
                     key={data.id}
+                    datas={datas}
                     data={data}
                     lists={lists}
                     handleMenuCard={(select) => handleMenuCard(select, data.id)}

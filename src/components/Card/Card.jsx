@@ -6,7 +6,7 @@ import Button from "../Button";
 import './Card.scss'
 import PropTypes from 'prop-types';
 
-function Card({ data, lists, handleMenuCard, handleEditData }) {
+function Card({ datas, data, lists, handleMenuCard, handleEditData }) {
   const inputRef = useRef(null);
   const modalRef = useRef(null);
   const cardRef = useRef(null);
@@ -27,6 +27,11 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
       element.removeEventListener('scroll', handleCardPosition);
     };
   }, []);
+
+  useEffect(() => {
+    // situation when a card deleted
+    handleCardPosition();
+  }, [datas]);
 
   function handleCardPosition() {
     setOffsetTop(cardRef.current.offsetTop);
@@ -133,6 +138,10 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
               <div>
                 <Button type='submit'>Save</Button>
               </div>
+
+              <div className="item__edit__error error--show">
+                <span>Card must be filled out.</span>
+              </div>
             </form>
           </div>
         )}
@@ -142,6 +151,7 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
 };
 
 Card.propTypes = {
+  datas: PropTypes.array,
   data: PropTypes.object,
   lists: PropTypes.array,
   handleMenuCard: PropTypes.func,
