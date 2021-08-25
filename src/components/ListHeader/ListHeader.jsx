@@ -106,14 +106,14 @@ function ListHeader({list, handleEditList, handleOpenAddCard, handleDeleteAllDat
             <ul className="pop-over__list">
               <li>
                 <button className='pop-over__item' onClick={()=>handleAction('delete_all_card')}>
-                  Archive all cards in this list...
+                  Delete all cards in this list...
                 </button>
               </li>
             </ul>
             <ul className="pop-over__list">
               <li>
                 <button className='pop-over__item' onClick={()=>handleAction('delete_list')}>
-                  Archive this list
+                  Delete this list
                 </button>
               </li>
             </ul>

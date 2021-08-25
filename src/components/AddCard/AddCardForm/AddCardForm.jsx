@@ -11,12 +11,21 @@ function AddCardForm({handleAddData, list, handleOpenAddCard}) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (!input.length) {
+    const spaceRegex = /\s/g;
+    if (!input.length || !input.replace(spaceRegex, "")) {
+      alert("Card must be filled out");
       return;
     }
+
+    if (input.length > 500) {
+      alert("Your text is too long");
+      return;
+    }
+
     handleAddData(input, list.id);
     setInput('');
     inputRef.current.focus();
+    inputRef.current.style.height = '90px';
   }
 
   function handleClickOutside(event) {

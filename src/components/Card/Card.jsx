@@ -13,6 +13,7 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
 
   const [offsetTop, setOffsetTop] = useState(0);
   const [offsetLeft, setOffsetLeft] = useState(0);
+  const [menuTop, setMenuTop] = useState(0);
   const [isEdit, setIsEdit] = useState(false);
   const [inputEdit, setInputEdit] = useState(data.name);
 
@@ -32,7 +33,18 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
     setOffsetLeft(cardRef.current.offsetLeft - element.scrollLeft);
   }
 
-  const handleSubmitEdit = () => {
+  function handleSubmitEdit(event) {
+    event.preventDefault();
+    const spaceRegex = /\s/g;
+    if (!inputEdit.length || !inputEdit.replace(spaceRegex, "")) {
+      alert("Card must be filled out");
+      return;
+    }
+
+    if (inputEdit.length > 500) {
+      alert("Your text is too long");
+      return;
+    }
     handleEditData(data.id, inputEdit);
     setIsEdit(false);
   };
@@ -42,6 +54,18 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
       inputRef.current.focus();
       inputRef.current.select();
       autosize(inputRef.current);
+
+      let inputHeight = inputRef.current.offsetHeight;
+      let cardHeight = inputHeight + offsetTop + 52; // 52 is for Save button
+
+      if (cardHeight > window.innerHeight) {
+        let newOffsetTop = window.innerHeight - (inputHeight + 60);
+        setOffsetTop(newOffsetTop);
+
+        if (inputHeight > window.innerHeight) {
+          setMenuTop(Math.abs(newOffsetTop) + 24);
+        }
+      }
 
       function handleClickOutside(event) {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -61,7 +85,14 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
       cardRef.current.scrollIntoView();
       element.scrollLeft -= 16;
     }
-    setIsEdit(true);
+    if ((cardRef.current.offsetWidth + offsetLeft) > window.innerWidth) {
+      cardRef.current.scrollIntoView({behavior: 'smooth'});
+      element.scrollLeft += 150;
+    }
+    
+    setTimeout(() => {
+      setIsEdit(true);
+    }, 0);
   }
 
   return (
@@ -74,7 +105,7 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
           <div className="item__edit">
             <form
               className="item__edit__card"
-              onSubmit={() => handleSubmitEdit()}
+              onSubmit={handleSubmitEdit}
               ref={modalRef}
               style={{ top: `${offsetTop}px`, left: `${offsetLeft}px` }}
             >
@@ -91,7 +122,12 @@ function Card({ data, lists, handleMenuCard, handleEditData }) {
                 timeout={200}
                 classNames="fade"
               >
-                <MenuCard lists={lists} handleMenuCard={handleMenuCard} currentList={data.listID} />
+                <MenuCard
+                  lists={lists}
+                  handleMenuCard={handleMenuCard}
+                  currentList={data.listID}
+                  menuTop={menuTop}
+                />
               </CSSTransition>
 
               <div>
