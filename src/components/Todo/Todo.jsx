@@ -6,31 +6,37 @@ import AddList from "../AddList";
 import Card from "../Card";
 import ListHeader from "../ListHeader";
 import ChangeBackground from "../ChangeBackground/ChangeBackground";
+import { IconMenu } from "../shared/Icons";
 
 function Todo() {
   const [lists, setLists] = useState([]);
   const [datas, setDatas] = useState([]);
   const [isChangeBg, setIsChangeBg] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState("blue");
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem('lists'))) {
-      setLists(JSON.parse(localStorage.getItem('lists')));
-      setDatas(JSON.parse(localStorage.getItem('datas')));
-      setBackgroundColor(localStorage.getItem('theme'));
+    if (JSON.parse(localStorage.getItem("lists"))) {
+      setLists(JSON.parse(localStorage.getItem("lists")));
+      setDatas(JSON.parse(localStorage.getItem("datas")));
+      setBackgroundColor(localStorage.getItem("theme"));
     }
-    
-    window.addEventListener('resize', handleResize);
+
+    window.addEventListener("resize", handleResize);
     handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('lists', JSON.stringify(lists));
-    localStorage.setItem('datas', JSON.stringify(datas));
+    localStorage.setItem("lists", JSON.stringify(lists));
+    localStorage.setItem("datas", JSON.stringify(datas));
   }, [lists, datas]);
 
   useEffect(() => {
-    localStorage.setItem('theme', backgroundColor);
+    localStorage.setItem("theme", backgroundColor);
   }, [backgroundColor]);
 
   function handleAddList(list) {
@@ -125,18 +131,16 @@ function Todo() {
     }
   };
 
-  function handleChangeBackground(event){
+  function handleChangeBackground(event) {
     setBackgroundColor(event.target.value);
   }
 
-  const [isMobile, setIsMobile] = useState(false);
-  
-  function handleResize(){
+  function handleResize() {
     window.innerWidth < 500 ? setIsMobile(true) : setIsMobile(false);
   }
 
   return (
-    <div className={`todo theme--`+backgroundColor}>
+    <div className={`todo theme--` + backgroundColor}>
       <div className="todo__header">
         <div className="todo__header__title">
           <div className="todo__header__name">Todo List</div>
@@ -152,14 +156,17 @@ function Todo() {
             </a>
           </span>
         </div>
-        <button className="todo__header__menu" onClick={()=>setIsChangeBg(!isChangeBg)}>
-          <svg className='todo__header__menu__icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M5 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm14 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-          {isMobile ? null : 'Change background' }
+        <button
+          className="todo__header__menu"
+          onClick={() => setIsChangeBg(!isChangeBg)}
+        >
+          <IconMenu className="todo__header__menu__icon" />
+          {isMobile ? null : "Change background"}
         </button>
       </div>
       <div className="todo__canvas" id="todo__canvas">
-        {lists && lists.map((list, id) => (
-          <section key={id} className="todo__list">
+        {lists?.map((list, index) => (
+          <section key={list?.id} className="todo__list">
             <h2 className="hidden">{list.title}</h2>
 
             <ListHeader
@@ -172,7 +179,7 @@ function Todo() {
 
             <ul className="todo__card">
               {datas
-                .filter((el) => el.listID === lists[id].id)
+                .filter((el) => el.listID === lists[index].id)
                 .map((data) => (
                   <Card
                     key={data.id}

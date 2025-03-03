@@ -1,0 +1,28 @@
+@import "/src/Variables.scss";
+
+.snackbar {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+
+  padding: 8px;
+  color: white;
+  transition: 0.3s ease;
+  transform: translate(-50%, 150%);
+  opacity: 0;
+  z-index: 2;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+}
+.success {
+  background-color: #22c55e;
+}
+.error {
+  background-color: rgb(176, 70, 50);
+}
+
+.snackbar_show {
+  opacity: 1;
+  transform: translate(-50%, 0%);
+}

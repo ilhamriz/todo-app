@@ -1,12 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import autosize from "autosize";
 import MenuCard from "../MenuCard";
 import Button from "../Button";
-import './Card.scss'
-import PropTypes from 'prop-types';
+import "./Card.scss";
+import PropTypes from "prop-types";
+import { SnackbarContext } from "../../Provider/snackbar-provider";
 
 function Card({ datas, data, lists, handleMenuCard, handleEditData }) {
+  const { setSnackbar } = useContext(SnackbarContext);
   const inputRef = useRef(null);
   const modalRef = useRef(null);
   const cardRef = useRef(null);
@@ -24,7 +27,7 @@ function Card({ datas, data, lists, handleMenuCard, handleEditData }) {
     element.addEventListener("scroll", handleCardPosition);
 
     return () => {
-      element.removeEventListener('scroll', handleCardPosition);
+      element.removeEventListener("scroll", handleCardPosition);
     };
   }, []);
 
@@ -42,17 +45,17 @@ function Card({ datas, data, lists, handleMenuCard, handleEditData }) {
     event.preventDefault();
     const spaceRegex = /\s/g;
     if (!inputEdit.length || !inputEdit.replace(spaceRegex, "")) {
-      alert("Card must be filled out");
+      setSnackbar("Card must be filled out", "error");
       return;
     }
 
     if (inputEdit.length > 500) {
-      alert("Your text is too long");
+      setSnackbar("Your text is too long", "error");
       return;
     }
     handleEditData(data.id, inputEdit);
     setIsEdit(false);
-  };
+  }
 
   useEffect(() => {
     if (isEdit) {
@@ -86,69 +89,65 @@ function Card({ datas, data, lists, handleMenuCard, handleEditData }) {
   }, [isEdit]);
 
   function handleClickCard() {
-    if ((cardRef.current.offsetLeft - element.scrollLeft) < 0) {
-      cardRef.current.scrollIntoView();
-      element.scrollLeft -= 16;
+    if (!isEdit) {
+      if (cardRef.current.offsetLeft - element.scrollLeft < 0) {
+        cardRef.current.scrollIntoView();
+        element.scrollLeft -= 16;
+      }
+      if (cardRef.current.offsetWidth + offsetLeft > window.innerWidth) {
+        cardRef.current.scrollIntoView({ behavior: "smooth" });
+        element.scrollLeft += 150;
+      }
+
+      setTimeout(() => {
+        setIsEdit(true);
+      }, 0);
     }
-    if ((cardRef.current.offsetWidth + offsetLeft) > window.innerWidth) {
-      cardRef.current.scrollIntoView({behavior: 'smooth'});
-      element.scrollLeft += 150;
-    }
-    
-    setTimeout(() => {
-      setIsEdit(true);
-    }, 0);
   }
 
   return (
-    <>
-      <li className="todo__item" ref={cardRef} onClick={handleClickCard}>
-        <div className="item__main">
-          <div className="item__task">{data.name}</div>
-        </div>
-        {isEdit && (
-          <div className="item__edit">
-            <form
-              className="item__edit__card"
-              onSubmit={handleSubmitEdit}
-              ref={modalRef}
-              style={{ top: `${offsetTop}px`, left: `${offsetLeft}px` }}
+    <li className="todo__item" ref={cardRef} onClick={handleClickCard}>
+      <div className="item__main">
+        <div className="item__task">{data.name}</div>
+      </div>
+      {isEdit && (
+        <div className="item__edit">
+          <form
+            className="item__edit__card"
+            onSubmit={handleSubmitEdit}
+            ref={modalRef}
+            style={{ top: `${offsetTop}px`, left: `${offsetLeft}px` }}
+          >
+            <textarea
+              className="item__edit__input"
+              ref={inputRef}
+              value={inputEdit}
+              onChange={(e) => setInputEdit(e.target.value)}
+            />
+
+            <CSSTransition
+              in={isEdit}
+              appear={true}
+              timeout={200}
+              classNames="fade"
             >
-              <textarea
-                className="item__edit__input"
-                ref={inputRef}
-                value={inputEdit}
-                onChange={(e) => setInputEdit(e.target.value)}
+              <MenuCard
+                lists={lists}
+                handleMenuCard={handleMenuCard}
+                currentList={data.listID}
+                menuTop={menuTop}
               />
+            </CSSTransition>
 
-              <CSSTransition
-                in={isEdit}
-                appear={true}
-                timeout={200}
-                classNames="fade"
-              >
-                <MenuCard
-                  lists={lists}
-                  handleMenuCard={handleMenuCard}
-                  currentList={data.listID}
-                  menuTop={menuTop}
-                />
-              </CSSTransition>
-
-              <div>
-                <Button type='submit'>Save</Button>
-              </div>
-
-              <div className="item__edit__error error--show">
-                <span>Card must be filled out.</span>
-              </div>
-            </form>
-          </div>
-        )}
-      </li>
-    </>
+            <div>
+              <Button type="submit">Save</Button>
+            </div>
+          </form>
+        </div>
+      )}
+    </li>
   );
-};
+}
 
 Card.propTypes = {
   datas: PropTypes.array,
