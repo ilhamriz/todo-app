@@ -143,7 +143,7 @@ function Todo() {
     <div className={`todo theme--` + backgroundColor}>
       <div className="todo__header">
         <div className="todo__header__title">
-          <div className="todo__header__name">Todo List</div>
+          <div className="todo__header__name">Todo App</div>
           <span className="todo__header__credit">
             Made by{" "}
             <a
