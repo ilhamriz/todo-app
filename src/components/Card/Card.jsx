@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useRef, useState } from "react";
-import { CSSTransition } from "react-transition-group";
 import autosize from "autosize";
 import MenuCard from "../MenuCard";
 import Button from "../Button";
@@ -106,45 +105,40 @@ function Card({ datas, data, lists, handleMenuCard, handleEditData }) {
   }
 
   return (
-    <li className="todo__item" ref={cardRef} onClick={handleClickCard}>
-      <div className="item__main">
-        <div className="item__task">{data.name}</div>
-      </div>
-      {isEdit && (
-        <div className="item__edit">
-          <form
-            className="item__edit__card"
-            onSubmit={handleSubmitEdit}
-            ref={modalRef}
-            style={{ top: `${offsetTop}px`, left: `${offsetLeft}px` }}
-          >
-            <textarea
-              className="item__edit__input"
-              ref={inputRef}
-              value={inputEdit}
-              onChange={(e) => setInputEdit(e.target.value)}
-            />
-
-            <CSSTransition
-              in={isEdit}
-              appear={true}
-              timeout={200}
-              classNames="fade"
+    <li ref={cardRef}>
+      <button type="button" className="todo__item" onClick={handleClickCard}>
+        <div className="item__main">
+          <div className="item__task">{data.name}</div>
+        </div>
+        {isEdit && (
+          <div className="item__edit">
+            <form
+              className="item__edit__card"
+              onSubmit={handleSubmitEdit}
+              ref={modalRef}
+              style={{ top: `${offsetTop}px`, left: `${offsetLeft}px` }}
             >
+              <textarea
+                className="item__edit__input"
+                ref={inputRef}
+                value={inputEdit}
+                onChange={(e) => setInputEdit(e.target.value)}
+              />
+
               <MenuCard
                 lists={lists}
                 handleMenuCard={handleMenuCard}
                 currentList={data.listID}
                 menuTop={menuTop}
               />
-            </CSSTransition>
 
-            <div>
-              <Button type="submit">Save</Button>
-            </div>
-          </form>
-        </div>
-      )}
+              <div>
+                <Button type="submit">Save</Button>
+              </div>
+            </form>
+          </div>
+        )}
+      </button>
     </li>
   );
 }

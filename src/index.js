@@ -1,13 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 import App from "./App";
 import SnackbarProvider from "./Provider/snackbar-provider";
 
-ReactDOM.render(
-  <React.StrictMode>
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
     <SnackbarProvider>
       <App />
     </SnackbarProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </StrictMode>
 );

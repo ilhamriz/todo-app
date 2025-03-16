@@ -13,6 +13,7 @@
   position: relative;
   margin-bottom: 8px;
   box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+  text-align: left;
 
   &:hover {
     background-color: #f4f5f7;
@@ -31,7 +32,6 @@
   text-overflow: ellipsis;
   font-size: 14px;
   line-height: 20px;
-  // background-color: aquamarine;
 }
 .item__task--hidden {
   display: none;
