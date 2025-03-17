@@ -1,5 +1,5 @@
 {
-  "homepage": "https://ilhamriz.github.io/todo-app",
+  "homepage": "https://ilhamriz-todo.vercel.app/",
   "name": "todo-app",
   "version": "0.1.0",
   "private": true,
@@ -8,7 +8,6 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.1",
     "autosize": "^6.0.1",
-    "gh-pages": "^6.3.0",
     "node-sass": "^9.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -16,8 +15,6 @@
     "web-vitals": "^4.2.4"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
